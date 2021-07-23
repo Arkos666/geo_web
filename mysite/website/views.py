@@ -11,6 +11,7 @@ cities = []
 
 
 class CustomHTMLCal(calendar.HTMLCalendar):
+    # custom class for calendar.HTML create
     cssclasses = ["lun", "mar", "mie", "jue", "vie", "sab", "dom"]
     cssclass_month_head = "text-center month-head"
     cssclass_month = "text-center month"
@@ -18,6 +19,8 @@ class CustomHTMLCal(calendar.HTMLCalendar):
 
 
 def normalize(s):
+    # function to delete accent mark to avoid problems
+
     replacements = (
         ("á", "a"),
         ("é", "e"),
@@ -36,9 +39,10 @@ def normalize(s):
 
 
 def find_holiday(city):
-    # We're trying to found the city in the json scrapped
+    # In this function we'll search the city in the json scrapped
     # The function will return a dict with 'month':('holidays')
-    # non if city is not found
+    # None if city is not found
+
     f = open('holidays_spain.json', "r")
 
     # Reading from file
@@ -71,6 +75,7 @@ def getcity(long, lat):
     address = location.raw['address']
 
     # traverse the data
+    # We leave the rest of variables for future
     city = address.get('city', '')
     state = address.get('state', '')
     country = address.get('country', '')
@@ -79,60 +84,68 @@ def getcity(long, lat):
     return city
 
 
+# we render locate_all.html
 def index(request):
     return render(request, "website/locate_all.html")
 
 
 def locate_get(request):
+    # main website return
+
+    # We will get the parameters
     location = request.GET
+
     city = ""
-    if 'city' in location:
+    if 'city' in location:  # The objective is to get the city
         city = location['city']
-    else:
+    else:  # If we have long and lat then we search the city
         city = getcity(location['long'], location['lat'])
-    result = find_holiday(normalize(city))
-    result = {int(k): v for k, v in result.items()}
+    result = find_holiday(normalize(city))  # We delete accent marks
+    result = {int(k): v for k, v in result.items()}  # In this case it's easier to manipulate int than str in dict
 
     now = datetime.datetime.now()
     year = now.year
-    month = now.month
-    day = now.day
+    month = 12 #now.month
+    day = 27 # now.day
 
-    next_holiday = 0
-    print(result[month])
-    if not result[month] == []:
-        next_holiday = max(result[month])
+    next_day_hol = 0  # Initialize next_day_hol that have the day
+
+    if not result[month] == []:  # If we have holidays in that month
+        next_day_hol = max(result[month])
         next_month_hol = month
 
-    if int(next_holiday) <= day and not month == 12:
-        for i in range(month + 1, 12):
+    december = 12
+
+    print (day)
+    print(max({int(v) for v in result[december]}))
+
+    # If month is not december and next
+    if int(next_day_hol) <= day and not month == december:
+        for i in range(month + 1, december):
             if not result[i] == []:
-                next_holiday = min(result[i])
+                next_day_hol = min(result[i])
                 next_month_hol = i
                 break
-    elif month == 12 and day >= 25:
-        next_holiday = 1
+    # If month is december and we passed the last holiday, next holiday is new year
+    elif month == december and day >= max({int(v) for v in result[december]}):
+        next_day_hol = 1
         next_month_hol = 1
 
-    cal = CustomHTMLCal() # init
+    cal = CustomHTMLCal()  #Prepare calendar with custom CSS
     str_cal = change_lang(cal.formatmonth(year, month)) # change lang
-    str_cal = class_holiday(str_cal, result[month]) # modify holidays classes
+    str_cal = class_holiday(str_cal, result[month]) # modify holidays classes with danger bg
 
     return render(request, "website/locate_get.html", {
         "city": city,
         "holiday": str(day) in result[month],
-        "next_hol": str(next_holiday) + "/" + str(next_month_hol),
+        "next_hol": str(next_day_hol) + "/" + str(next_month_hol),
         "cities": sorted(cities),
         "cal": mark_safe(str_cal)
     })
 
 
-def holiday(request):
-    return render(request, "website/holiday.html")
-
-
+# We change the bg of holidays in calendar with re
 def class_holiday(html_string, holidays):
-    print(holidays)
     for i in holidays:
         pattern = r'(<td class="[a-z]{3}">' + str(i) + '<\/td>)'
         x = re.search(pattern, html_string)
@@ -141,6 +154,7 @@ def class_holiday(html_string, holidays):
     return html_string
 
 
+# change lang days and months to Spanish
 def change_lang(str_cal):
     str_cal = str_cal.replace("mon", "lu")
     str_cal = str_cal.replace("Mon", "Lu")
