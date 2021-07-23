@@ -116,9 +116,6 @@ def locate_get(request):
 
     december = 12
 
-    print (day)
-    print(max({int(v) for v in result[december]}))
-
     # If month is not december and next
     if int(next_day_hol) <= day and not month == december:
         for i in range(month + 1, december):
