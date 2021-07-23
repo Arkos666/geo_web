@@ -1,14 +1,14 @@
 # geo_web
 First we scrapped info from https://www.seg-social.es/wps/portal/wss/internet/CalendarioLaboral to local JSON<p>
 After that I created a little Django project.<p>
-<div><ul style="list-style-type:none;">  
-  <li>1- We get location (it's necessary to activate get location from browser)</li>
-  <li>2- We get the city from location</li>
-  <li>3- We get from city if it's holiday to day or not from json</li>
-  <li>4- We create calendary from json for that city</li>
-  <li>5- We calculate next holiday</li>
-  <li>6- We create a form to select city and recalc</li>
-  <ul><p></div>
+<div><ol>  
+  <li>We get location (it's necessary to activate get location from browser)</li>
+  <li>We get the city from location</li>
+  <li>We get from city if it's holiday to day or not from json</li>
+  <li>We create calendary from json for that city</li>
+  <li>We calculate next holiday</li>
+  <li>We create a form to select city and recalc</li>
+  </ol>
   
 I want to create more projects but in future:<p>
 How to expand the scope? Next steps?<p>
