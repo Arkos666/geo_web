@@ -1,7 +1,7 @@
 # geo_web
 First we scrapped info from https://www.seg-social.es/wps/portal/wss/internet/CalendarioLaboral to local JSON<p>
 After that I created a little Django project.<p>
-<div><ul>  
+<div><ul style="list-style-type:none;">  
   <li>1- We get location (it's necessary to activate get location from browser)</li>
   <li>2- We get the city from location</li>
   <li>3- We get from city if it's holiday to day or not from json</li>
