@@ -1,0 +1,45 @@
+{% extends "website/layout.html" %}
+
+{% block body %}
+    {% if holiday == None %}
+        <p> {{ city }} no tiene calendario de la
+            <a href="https://www.seg-social.es/wps/portal/wss/internet/CalendarioLaboral" ><u>Seguridad Social</u></a></p>
+    {% else %}
+        <p>¿Es fiesta en {{ city }}?</p>
+        {% if holiday %}
+            <h1> SÍ </h1>
+        {% else %}
+            <h1> NO </h1>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block option_cities %}
+<h3>Ir a otra ciudad</h3>
+<form id="msform" action="locate_get.html" method="get">
+    <input required name="city" class="form-control" list="datalist" id="ListCities" placeholder="Buscar...">
+    <datalist id="datalist">
+        {% for name in cities %}
+        <option value="{{ name }}">
+        {% endfor %}
+    </datalist>
+    <div class="p-3"></div>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
+
+{% block calendar %}
+    <h3>CALENDARIO</h3>
+    {{ cal }}
+{% endblock %}
+
+
+{% block next_holiday %}
+    <h3>El siguiente festivo es:</h3>
+    <h1 class="text-warning"> {{ next_hol }} </h1>
+
+
+{% endblock %}
+
+
+

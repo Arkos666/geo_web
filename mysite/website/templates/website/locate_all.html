@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body onload="getLocation()">
+
+<p>Loading...</p>
+
+<form name="myform" action="locate_get.html" method="get">
+    <input type="hidden" id="lat" name="lat" placeholder="latitude">
+    <input type="hidden" id="long" name="long" placeholder="longitude">
+</form>
+<p id="text" name="lat"></p>
+
+
+<script>
+var lat = document.getElementById("lat");
+var long = document.getElementById("long");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    document.getElementById("text").innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+    if (lat.value==""){
+        lat.value = position.coords.latitude;
+        long.value = position.coords.longitude;
+        document.myform.submit();
+    }
+
+}
+
+</script>
+
+</body>
+</html>

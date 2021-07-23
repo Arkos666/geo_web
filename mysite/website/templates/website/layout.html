@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+    {%load static %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'website/css/cover.css' %}" rel="stylesheet">
+
+  </head>
+
+    <body class="d-flex h-100 text-center text-white bg-dark">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="mb-auto">
+            </header>
+
+            <main class=".container-fluid">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-auto">
+                        {% block body %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </main>
+            <div class="p-3"></div>
+            <div class="p-3"></div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    {% block calendar %}
+                    {% endblock %}
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    {% block next_holiday %}
+                    {% endblock %}
+                </div><!-- /.col-lg-4 -->
+
+                <div class="col-lg-4">
+                    {% block option_cities %}
+                    {% endblock %}
+
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+
+
+            <footer class="mt-auto text-white-50">
+                <p>Developed with Django and boostrap, by <a href="https://www.linkedin.com/in/dgarries/" class="text-white">@David Garries</a>.</p>
+            </footer>
+        </div> <!-- main div body -->
+
+
+    </body>
+</html>
