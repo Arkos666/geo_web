@@ -105,8 +105,8 @@ def locate_get(request):
 
     now = datetime.datetime.now()
     year = now.year
-    month = 12 #now.month
-    day = 27 # now.day
+    month = now.month
+    day = now.day
 
     next_day_hol = 0  # Initialize next_day_hol that have the day
 
