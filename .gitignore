@@ -120,3 +120,6 @@ GitHub.sublime-settings
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
+
+# Custom #
+mysite/key
