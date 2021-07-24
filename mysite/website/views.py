@@ -96,11 +96,24 @@ def locate_get(request):
     location = request.GET
 
     city = ""
-    if 'city' in location:  # The objective is to get the city
-        city = location['city']
-    else:  # If we have long and lat then we search the city
-        city = getcity(location['long'], location['lat'])
+    december = 12
+    try:
+        if 'city' in location:  # The objective is to get the city
+            city = location['city']
+        else:  # If we have long and lat then we search the city
+            city = getcity(location['long'], location['lat'])
+    except:
+        city = "Ciudad no encontrada"
     result = find_holiday(normalize(city))  # We delete accent marks
+
+    if result is None:
+        result = {}
+        for i in range(1, december):
+            if i == 1:
+                result[i] = []
+                result[i].append(1)
+            else:
+                result[i] = []
     result = {int(k): v for k, v in result.items()}  # In this case it's easier to manipulate int than str in dict
 
     now = datetime.datetime.now()
@@ -109,15 +122,16 @@ def locate_get(request):
     day = now.day
 
     next_day_hol = 0  # Initialize next_day_hol that have the day
+    next_month_hol = 0
 
     if not result[month] == []:  # If we have holidays in that month
-        next_day_hol = max(result[month])
+        next_day_hol = max([int(v) for v in result[month]])
         next_month_hol = month
 
-    december = 12
-
+    if next_month_hol == month and next_day_hol > day:
+        pass
     # If month is not december and next
-    if int(next_day_hol) <= day and not month == december:
+    elif int(next_day_hol) <= day and not month == december:
         for i in range(month + 1, december):
             if not result[i] == []:
                 next_day_hol = min(result[i])
@@ -125,6 +139,10 @@ def locate_get(request):
                 break
     # If month is december and we passed the last holiday, next holiday is new year
     elif month == december and day >= max({int(v) for v in result[december]}):
+        next_day_hol = 1
+        next_month_hol = 1
+    # not controlled, city not found
+    else:
         next_day_hol = 1
         next_month_hol = 1
 

@@ -27,7 +27,7 @@ SECRET_KEY = data
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
