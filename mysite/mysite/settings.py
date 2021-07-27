@@ -29,17 +29,17 @@ SECRET_KEY = data
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SECURE_SSL_REDIRECT = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 
-ALLOWED_HOSTS = ['location.realwebcreator.es']
+ALLOWED_HOSTS = ['location.realwebcreator.es', 'localhost']
 
 # Application definition
 
 INSTALLED_APPS = [
-    'sslserver',
+    # 'sslserver',
     'website',
     'django.contrib.admin',
     'django.contrib.auth',
