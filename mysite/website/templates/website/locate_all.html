@@ -14,16 +14,45 @@
 <script>
 var lat = document.getElementById("lat");
 var long = document.getElementById("long");
+var text = document.getElementById("text")
 
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
   } else {
-    document.getElementById("text").innerHTML = "Geolocation is not supported by this browser.";
+    // If any error
+    showError(0)
   }
 }
 
+function showError(error) {
+    // Long lat from Barcelona (I'm from there)
+    lat.value = 41.390205;
+    long.value = 2.154007;
+
+  switch(error.code) {
+    case 0:
+      text.innerHTML = "Geolocation is not supported by this browser.";
+      break;
+    case error.PERMISSION_DENIED:
+      text.innerHTML = "User denied the request for Geolocation."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      text.innerHTML = "Location information is unavailable."
+      break;
+    case error.TIMEOUT:
+      text.innerHTML = "The request to get user location timed out."
+      break;
+    case error.UNKNOWN_ERROR:
+      text.innerHTML = "An unknown error occurred."
+      break;
+  }
+  // Message and submit
+  document.myform.submit();
+}
+
 function showPosition(position) {
+    // If all works we get lat, long and proceed
     if (lat.value==""){
         lat.value = position.coords.latitude;
         long.value = position.coords.longitude;

@@ -34,7 +34,7 @@ DEBUG = True
 # SESSION_COOKIE_SECURE = True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 
-ALLOWED_HOSTS = ['location.realwebcreator.es', 'localhost']
+ALLOWED_HOSTS = ['*', 'location.realwebcreator.es', 'localhost','127.0.0.1']
 
 # Application definition
 
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mysite.middleware.Middleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -129,3 +130,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
